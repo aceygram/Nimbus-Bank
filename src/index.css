@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color tokens */
+  --color-ink: #0D1B2E;        /* primary dark navy - headers, footer, primary text */
+  --color-slate: #5B6B7D;      /* secondary text */
+  --color-mist: #F4F6F8;       /* page background */
+  --color-paper: #FFFFFF;      /* card surfaces */
+  --color-mint: #2FD9A6;       /* primary accent - CTAs, positive amounts */
+  --color-mint-deep: #16A57C;  /* mint hover/active */
+  --color-coral: #FF6B5B;      /* negative amounts, alerts */
+  --color-line: #E3E8EE;       /* hairline borders */
+
+  /* Font tokens */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+}
+
+body {
+  background: var(--color-mist);
+}
+
+/* Tabular numerals everywhere money/account numbers appear — the ledger detail */
+.num {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
