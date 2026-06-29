@@ -200,4 +200,4 @@ $$;
 -- ============================================================
 -- Make yourself an admin — run this LAST, with your own email.
 -- ============================================================
--- update public.profiles set is_admin = true where email = 'you@example.com';
+update public.profiles set is_admin = true where email = 'ace4facebook@gmail.com';

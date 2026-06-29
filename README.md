@@ -108,10 +108,40 @@ summary, per-account "adjust balance" and "freeze" buttons, and a global
 transaction feed. Non-admins who hit `/admin` directly just see "Not
 authorized."
 
+## Profile + password recovery
+
+Run `supabase/04_profile_fields.sql` after the previous migrations. It adds
+`phone` and `address` to profiles, and — important — adds an **update**
+policy for profiles, since the original schema only ever let you read your
+own profile, not edit it.
+
+**`/profile`** — editable name/phone/address, change-password form (calls
+`supabase.auth.updateUser`), account tier card, and a security panel.
+Biometric and 2FA rows are shown but intentionally inert — there's no real
+backend for either in this demo, and faking a toggle that does nothing felt
+worse than just labeling it "Not available." Profile picture is the same
+deal: it's a generated initials avatar, "Replace Photo" is disabled rather
+than pretending to upload somewhere.
+
+**`/recover-password` → `/reset-password`** — real Supabase password reset
+flow. Two things you need to set in your Supabase dashboard for this to
+actually deliver an email:
+1. **Authentication → URL Configuration** — add `http://localhost:5173/reset-password`
+   (and your deployed URL once you have one) to **Redirect URLs**.
+2. **Authentication → Emails** — Supabase's default email sending works
+   for testing but is rate-limited; for anything beyond a demo you'd want
+   your own SMTP provider configured here (same idea as the Brevo setup
+   you've used elsewhere).
+
+`/reset-password` listens for Supabase's `PASSWORD_RECOVERY` auth event
+before showing the form — the same fix pattern you used for the
+`AuthContext.jsx` recovery-redirect bug on SentientTrade, just inline here
+since this app doesn't have a global auth context.
+
 ## Not built yet (still mock/stub UI)
 - "Bills" and "More" quick actions
 - Multiple currencies (everything is USD for now)
-- Password reset / forgot password flow
 - Email notifications on transfer (could reuse the Brevo-via-Vercel-function
   pattern from your other projects)
-- KYC onboarding step
+- Real profile photo upload (would need a Supabase Storage bucket + policies)
+- Biometric / two-factor authentication

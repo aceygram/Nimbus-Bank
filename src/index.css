@@ -1,20 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color tokens */
-  --color-ink: #0D1B2E;        /* primary dark navy - headers, footer, primary text */
-  --color-slate: #5B6B7D;      /* secondary text */
-  --color-mist: #F4F6F8;       /* page background */
-  --color-paper: #FFFFFF;      /* card surfaces */
-  --color-mint: #2FD9A6;       /* primary accent - CTAs, positive amounts */
-  --color-mint-deep: #16A57C;  /* mint hover/active */
-  --color-coral: #FF6B5B;      /* negative amounts, alerts */
-  --color-line: #E3E8EE;       /* hairline borders */
+  /* Color tokens — mapped from the Nimbus Bank Figma design system */
+  --color-ink: #0B0B0B;         /* primary text, dark sections */
+  --color-slate: #444748;       /* secondary text */
+  --color-label: #747878;       /* tiny uppercase field labels */
+  --color-mist: #FCF9F8;        /* page background (warm) */
+  --color-paper: #FFFFFF;       /* card surfaces */
+  --color-muted: #F6F3F2;       /* subtle recessed backgrounds */
+  --color-muted-2: #EAE7E7;     /* secondary subtle background */
+  --color-mint: #A0D468;        /* primary accent — CTAs, positive amounts */
+  --color-mint-deep: #8BC34A;   /* mint hover/active */
+  --color-coral: #D8334A;       /* negative amounts, alerts, logout */
+  --color-line: #E2E2E1;        /* hairline borders */
+  --color-border-soft: #C4C7C7; /* input borders */
+  --color-link: #2259BF;        /* links, "View All" */
+  --color-blue: #5D8BF4;        /* icon circles, secondary buttons */
+  --color-blue-active: #6795FF; /* active sidebar link background */
+  --color-blue-active-text: #FFFFFF; /* text on active sidebar link */
 
   /* Font tokens */
-  --font-display: "Space Grotesk", sans-serif;
+  --font-display: "Inter", sans-serif;
   --font-body: "Inter", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-mono: "Roboto", sans-serif;
 }
 
 html {
@@ -23,10 +31,13 @@ html {
 }
 
 body {
-  background: var(--color-mist);
+  background: linear-gradient(180deg, #FCF9F8 0%, #E5E2E1 100%);
+  background-attachment: fixed;
 }
 
-/* Tabular numerals everywhere money/account numbers appear — the ledger detail */
+/* Tabular numerals + UI chrome (nav links, buttons, dates, account numbers,
+   uppercase tags) all run in JetBrains Mono in the Figma system — Inter is
+   reserved for headings, body copy, and names. */
 .num {
   font-family: var(--font-mono);
   font-feature-settings: "tnum" 1;
