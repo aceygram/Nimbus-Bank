@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { User, Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck, TrendingUp } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
+import logoImg from '../assets/Nimbus-logo.png'; 
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -47,14 +48,18 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="h-16 flex items-center justify-between px-6 bg-mist/80 backdrop-blur-sm">
+      <header className="h-22 flex items-center justify-between px-6 bg-mist/80 backdrop-blur-sm">
         <Link to="/" className="flex items-center gap-2">
-          <span className="w-10 h-10 rounded-lg bg-ink flex items-center justify-center">
-            <span className="w-3 h-3 rounded-sm bg-mint" />
-          </span>
-          <span className="font-display font-bold text-lg text-ink">Nimbus Bank</span>
+          <img src={logoImg} alt="Nimbus Bank Logo" className="w-18 h-18 object-cover hover:scale-105 transition-transform duration-300"/>
         </Link>
-        <Link to="/login" className="num text-sm text-link">Support</Link>
+        <Link to="/login" className="num text-sm text-link">
+        Support
+        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 stroke-current">
+    <circle cx="12" cy="12" r="10"></circle>
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+  </svg>
+        </Link>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-6 py-12">

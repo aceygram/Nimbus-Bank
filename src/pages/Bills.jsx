@@ -4,6 +4,8 @@ import { Clock, History, Repeat, ShieldCheck, ChevronLeft, ChevronRight, Bell, H
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import AddBillerModal from "../components/AddBillerModal";
+import logoImg from '../assets/Nimbus-logo.png'; 
+
 
 const CATEGORY_TAGS = {
   utilities: "bg-muted-2 text-slate",
@@ -173,7 +175,7 @@ export default function Bills() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-slate text-sm">
-        Loading your bills…
+        <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
       </div>
     );
   }

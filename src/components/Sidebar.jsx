@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { LayoutDashboard, Wallet, CreditCard, Receipt, Grid2x2, Settings, HelpCircle, LogOut } from "lucide-react";
+import logoImg from '../assets/Nimbus-logo.png'; 
 
 const NAV_ITEMS = [
   ["Dashboard", LayoutDashboard, "/dashboard", "dashboard"],
@@ -13,6 +14,8 @@ const NAV_ITEMS = [
 export default function Sidebar({ fullName, isAdmin, active, onTransferClick, onLogout }) {
   return (
     <aside className="hidden lg:flex flex-col w-64 bg-muted border-r border-line px-4 py-6 shrink-0">
+      <img src={logoImg} alt="Nimbus Bank Logo" className="w-25 h-25 mb-5 object-cover hover:scale-105 transition-transform duration-300"/>
+
       <div className="flex items-center gap-3 px-2 pb-6 mb-2">
         <span className="w-10 h-10 rounded-full bg-blue flex items-center justify-center text-white font-display font-semibold text-sm shrink-0">
           {fullName.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase()}

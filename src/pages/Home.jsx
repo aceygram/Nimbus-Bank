@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import DashboardPreview from "../components/DashboardPreview";
+import logoImg from '../assets/Nimbus-logo.png'; 
 
 const FEATURES = [
   {
@@ -54,13 +55,13 @@ export default function Home() {
           <div className="mt-8 flex items-center justify-center gap-3">
             <Link
               to="/signup"
-              className="bg-mint text-ink font-bold px-8 py-3.5 rounded-xl hover:bg-mint-deep transition-colors shadow-lg shadow-mint/20"
+              className="bg-mint text-ink font-bold px-5 py-3.5 rounded-xl hover:bg-mint-deep transition-colors shadow-lg shadow-mint/20"
             >
               Sign Up for Free
             </Link>
             <a
               href="#features"
-              className="bg-paper border border-line text-ink font-bold px-8 py-3.5 rounded-xl hover:border-slate transition-colors"
+              className="bg-paper border border-line text-ink font-bold px-5 py-3.5 rounded-xl hover:border-slate transition-colors"
             >
               See How It Works
             </a>
@@ -214,10 +215,7 @@ export default function Home() {
       <footer className="bg-ink px-6 py-10">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between gap-6">
           <div>
-            <p className="font-display font-semibold text-white text-lg">Nimbus Bank</p>
-            <p className="text-white/60 text-sm mt-1 max-w-xs">
-              Demo product for portfolio purposes — not a real financial institution.
-            </p>
+            <img src={logoImg} alt="Nimbus Bank Logo" className="w-25 h-auto block mx-auto" />
           </div>
           <div className="flex gap-8 num text-sm text-white/60">
             <span>Privacy Policy</span>

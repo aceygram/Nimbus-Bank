@@ -7,6 +7,9 @@ import SessionWarningModal from "../components/SessionWarningModal";
 import Sidebar from "../components/Sidebar";
 import MobileTabBar from "../components/MobileTabBar";
 import { useSessionTimeout, clearSessionStart } from "../hooks/useSessionTimeout";
+import logoImg from '../assets/Nimbus-logo.png'; 
+import logoImgInv from '../assets/Nimbus-Bank-Inverse.png'; 
+
 
 function formatUSD(n) {
   const sign = n < 0 ? "−" : "+";
@@ -119,7 +122,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-slate text-sm">
-        Loading your account…
+        <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
         <MobileTabBar active="dashboard" />
       </div>
     );
@@ -150,16 +153,26 @@ export default function Dashboard() {
       />
 
       {/* MAIN */}
-      <main className="flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
+      <main className="flex-1 px-5 sm:px-8 py-3 sm:py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
+          <span className="flex items-center justify-between mb-5">
+            <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15 lg:hidden"/>
+            <button className="relative w-10 h-10 rounded-full lg:hidden border border-line flex items-center justify-center text-slate hover:text-ink">
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
+            </button>
+          </span>
+
         <header className="flex items-center justify-between mb-8">
+
           <div>
-            <p className="num text-xs text-slate uppercase tracking-wide">{today}</p>
-            <h1 className="font-display text-3xl font-semibold text-ink mt-1">Welcome back, {fullName.split(" ")[0]}</h1>
+            <p className="num text-xs font-bold uppercase tracking-wide text-[#2259bf]">{today}</p>
+            <h1 className="font-display text-3xl font-semibold text-ink mt-1">Welcome back, <span class="text-[#2259bf]">{fullName.split(" ")[0]}</span></h1>
+            
           </div>
-          <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
-            <Bell size={18} />
-            <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
-          </button>
+          <button className="relative w-10 h-10 rounded-full hidden lg:flex border border-line flex items-center justify-center text-slate hover:text-ink">
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist " />
+            </button>
         </header>
 
         {accounts.length === 0 ? (
@@ -194,6 +207,8 @@ export default function Dashboard() {
                     <p className="num text-sm text-white/60 capitalize">{account.account_type} Account</p>
                     <h2 className="font-display text-2xl font-semibold text-white mt-1">Nimbus Premier</h2>
                   </div>
+
+                  <img src={logoImgInv} alt="Nimbus Bank Logo" className="w-15 h-15"/>
                 </div>
 
                 <div className="mt-6">

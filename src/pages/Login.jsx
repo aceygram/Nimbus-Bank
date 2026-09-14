@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, ShieldCheck, BadgeCheck } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
+import logoImg from '../assets/Nimbus-logo.png'; 
 
 const TIMEOUT_MESSAGES = {
   idle: "You were logged out after a few minutes of inactivity, for your security.",
@@ -42,17 +43,14 @@ export default function Login() {
     <div className="min-h-screen flex flex-col">
       <header className="h-20 flex items-center justify-center px-6">
         <Link to="/" className="flex items-center gap-2">
-          <span className="w-10 h-10 rounded-lg bg-ink flex items-center justify-center">
-            <span className="w-3 h-3 rounded-sm bg-mint" />
-          </span>
-          <span className="font-display font-semibold text-lg text-ink">Nimbus Bank</span>
+          <img src={logoImg} alt="Nimbus Bank Logo" className="w-25 h-25 mt-12 object-cover hover:scale-105 transition-transform duration-300"/>
         </Link>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-6 pb-12">
         <div className="w-full max-w-[440px]">
           <div className="text-center mb-8">
-            <h1 className="font-display text-3xl font-semibold text-ink">Welcome Back</h1>
+            <h1 className="font-display text-3xl font-semibold text-ink mt-8">Welcome Back</h1>
             <p className="text-slate mt-2">Enter your credentials to access your premier account.</p>
           </div>
 

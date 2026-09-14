@@ -4,6 +4,8 @@ import { Snowflake, Sun, AlertTriangle, Plus, Bell, HelpCircle, MapPin } from "l
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import MobileTabBar from "../components/MobileTabBar";
+import logoImg from '../assets/Nimbus-logo.png'; 
+
 
 function OrderCardModal({ accounts, onClose, onSuccess }) {
   const [accountId, setAccountId] = useState(accounts[0]?.id || "");
@@ -270,7 +272,8 @@ export default function Cards() {
 
   if (loading) {
       
-    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">Loading your cards… 
+    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+              <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
                 <MobileTabBar active="cards" />
     </div>;
   }
@@ -287,7 +290,7 @@ export default function Cards() {
         onLogout={async () => { await supabase.auth.signOut(); navigate("/"); }}
       />
 
-      <main className="flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
+      <main className="overflow-x-hidden flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
         <header className="flex items-end justify-between gap-4 flex-wrap mb-8">
           <div>
             <h1 className="font-display text-4xl font-bold tracking-tight">
@@ -330,7 +333,7 @@ export default function Cards() {
                           c.card_type === "credit"
                             ? "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)"
                             : "linear-gradient(135deg, #00668A 0%, #40C2FD 100%)",
-                        outline: i === activeCard ? "2px solid #2259BF" : "none",
+                        outline: i === activeCard ? "2px solid #949393" : "none",
                       }}
                     >
                       <div className="flex items-start justify-between">

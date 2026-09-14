@@ -27,7 +27,7 @@ const MobileTabBar = memo(function MobileTabBar({ active }) {
           <Link
             key={label}
             to={to}
-            className="relative flex flex-col items-center justify-center gap-1 w-16 h-14 rounded-xl transition-colors duration-150 select-none"
+            className="relative pt-3 flex flex-col items-center justify-center gap-1 w-16 h-14 rounded-xl transition-colors duration-150 select-none"
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             {/* Active indicator — absolutely positioned so it NEVER affects layout flow

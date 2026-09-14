@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
+import logoImg from '../assets/Nimbus-logo.png'; 
 
 export default function More() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ export default function More() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-slate text-sm">
-        Loading…
+        <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
       </div>
     );
   }

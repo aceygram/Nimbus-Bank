@@ -4,6 +4,7 @@ import { Landmark, PiggyBank, Briefcase, Plus, ArrowRight, ShieldCheck, Bell, He
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import MobileTabBar from "../components/MobileTabBar";
+import logoImg from '../assets/Nimbus-logo.png'; 
 
 
 const TYPE_ICON = { checking: Landmark, savings: PiggyBank, business: Briefcase };
@@ -116,7 +117,7 @@ export default function Accounts() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-slate text-sm">
-        Loading your accounts…
+        <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
         <MobileTabBar active="accounts" />
         
       </div>

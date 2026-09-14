@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, Download, Flag, ShieldCheck } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
+import logoImg from '../assets/Nimbus-logo.png'; 
 
 const TYPE_LABEL = {
   transfer: "Transfer",
@@ -78,7 +79,9 @@ export default function TransactionDetails() {
   }
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">Loading…</div>;
+    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+      <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
+    </div>;
   }
 
   if (!tx) {

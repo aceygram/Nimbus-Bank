@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowUpDown, Bell, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
+import logoImg from '../assets/Nimbus-logo.png';
 
 const CURRENCIES = ["EUR", "GBP", "BTC"];
 const SYMBOL = { EUR: "€", GBP: "£", BTC: "" };
@@ -108,7 +109,9 @@ export default function Exchange() {
   }
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">Loading…</div>;
+    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+      <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
+    </div>;
   }
 
   return (

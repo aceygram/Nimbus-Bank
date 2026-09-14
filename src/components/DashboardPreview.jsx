@@ -1,12 +1,13 @@
+import logoImg from '../assets/Nimbus-logo.png'; 
+
 export default function DashboardPreview() {
   return (
     <div className="bg-ink border border-white/10 rounded-[32px] shadow-2xl p-6 sm:p-8 w-full max-w-[1000px] mx-auto overflow-hidden">
       <div className="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-6">
         {/* mini sidebar */}
         <div className="hidden sm:flex flex-col gap-5 border-r border-white/10 pr-6">
-          <div className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-lg bg-blue flex items-center justify-center" />
-            <span className="text-sm text-white">Nimbus</span>
+          <div className="flex items-center gap-2 m-auto">
+            <img src={logoImg} alt="Nimbus Bank Logo" className="w-20 h-20"/>
           </div>
           <div className="flex flex-col gap-2 num text-sm">
             <span className="bg-blue/20 text-[#B1C5FF] rounded-lg px-3 py-2">Home</span>
@@ -17,7 +18,7 @@ export default function DashboardPreview() {
 
         {/* main content */}
         <div className="flex flex-col gap-6">
-          <div className="flex items-end justify-between">
+          <div className="flex items-end flex-wrap gap-3 justify-between">
             <div>
               <p className="num text-sm text-white/60">Current Balance</p>
               <p className="num text-4xl sm:text-5xl font-semibold text-white tracking-tight">$32,607.59</p>

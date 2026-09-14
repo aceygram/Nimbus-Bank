@@ -4,6 +4,7 @@ import { Bell, HelpCircle, Pencil, Fingerprint, KeyRound, ShieldCheck, Camera } 
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import MobileTabBar from "../components/MobileTabBar";
+import logoImg from '../assets/Nimbus-logo.png';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -118,7 +119,7 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-slate text-sm">
-        Loading your profile…
+        <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
         <MobileTabBar active="profile" />
       </div>
     );

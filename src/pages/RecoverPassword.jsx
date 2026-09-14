@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Lock, Headset } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
+import logoImg from '../assets/Nimbus-logo.png'; 
+
 
 export default function RecoverPassword() {
   const [email, setEmail] = useState("");
@@ -36,10 +38,7 @@ export default function RecoverPassword() {
         <div className="w-full max-w-[440px]">
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-6">
-              <span className="w-9 h-9 rounded-lg bg-ink flex items-center justify-center">
-                <span className="w-3 h-3 rounded-sm bg-mint" />
-              </span>
-              <span className="font-display font-semibold text-ink">Nimbus Bank</span>
+              <img src={logoImg} alt="Nimbus Bank Logo" className="w-25 h-25 mt-12 object-cover hover:scale-105 transition-transform duration-300"/>
             </Link>
             <h1 className="font-display text-2xl font-semibold text-ink">Recover Password</h1>
             <p className="text-slate mt-2 text-sm">
