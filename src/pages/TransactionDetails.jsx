@@ -79,14 +79,14 @@ export default function TransactionDetails() {
   }
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+    return <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
       <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
     </div>;
   }
 
   if (!tx) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <div className="min-h-dvh flex flex-col items-center justify-center gap-4">
         <p className="text-slate text-sm">Transaction not found.</p>
         <Link to="/dashboard" className="text-link text-sm font-medium">Back to dashboard</Link>
       </div>
@@ -97,7 +97,7 @@ export default function TransactionDetails() {
   const signedAmount = isOutgoing ? -tx.amount : tx.amount;
 
   return (
-    <div className="min-h-screen bg-mist px-5 sm:px-10 py-8">
+    <div className="min-h-dvh bg-mist px-5 sm:px-10 py-8">
       <div className="max-w-4xl mx-auto">
         <button onClick={() => navigate(-1)} className="num flex items-center gap-1.5 text-sm text-slate hover:text-ink mb-6">
           <ArrowLeft size={14} /> Back

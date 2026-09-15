@@ -118,7 +118,7 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+      <div className="min-h-dvhitems-center justify-center text-slate text-sm">
         <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
         <MobileTabBar active="profile" />
       </div>
@@ -128,7 +128,7 @@ export default function Profile() {
   const initials = fullName.split(" ").map((p) => p[0]).join("").slice(0, 2).toUpperCase();
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-dvh flex">
       <Sidebar
         fullName={fullName}
         isAdmin={isAdmin}

@@ -143,7 +143,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-dvh flex">
       <Sidebar
         fullName={fullName}
         isAdmin={isAdmin}

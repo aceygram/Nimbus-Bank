@@ -33,7 +33,7 @@ export default function RecoverPassword() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-dvhex flex-col">
       <main className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-[440px]">
           <div className="text-center mb-8">

@@ -47,7 +47,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-dvhol">
       <header className="h-22 flex items-center justify-between px-6 bg-mist/80 backdrop-blur-sm">
         <Link to="/" className="flex items-center gap-2">
           <img src={logoImg} alt="Nimbus Bank Logo" className="w-18 h-18 object-cover hover:scale-105 transition-transform duration-300"/>

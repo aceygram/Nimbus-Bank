@@ -116,7 +116,7 @@ export default function Accounts() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+      <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
         <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
         <MobileTabBar active="accounts" />
         
@@ -137,7 +137,7 @@ export default function Accounts() {
   const dotColors = ["bg-ink", "bg-link", "bg-blue", "bg-mint-deep", "bg-coral"];
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-dvh flex">
       <Sidebar
         fullName={fullName}
         isAdmin={isAdmin}

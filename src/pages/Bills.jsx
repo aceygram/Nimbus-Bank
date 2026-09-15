@@ -173,7 +173,7 @@ export default function Bills() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+      <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
         <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
       </div>
     );
@@ -185,7 +185,7 @@ export default function Bills() {
   const dueDates = billers.map((b) => new Date(b.due_date));
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-dvh flex">
       <Sidebar
         fullName={fullName}
         isAdmin={isAdmin}

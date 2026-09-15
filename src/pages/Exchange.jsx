@@ -109,13 +109,13 @@ export default function Exchange() {
   }
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-slate text-sm">
+    return <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
       <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
     </div>;
   }
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-dvhex">
       <Sidebar
         fullName={fullName}
         isAdmin={isAdmin}

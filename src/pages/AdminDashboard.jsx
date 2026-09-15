@@ -75,7 +75,7 @@ export default function AdminDashboard() {
 
   if (!authChecked) {
     return (
-      <div className="min-h-screen bg-mist flex items-center justify-center text-slate text-sm">
+      <div className="min-h-dvh bg-mist flex items-center justify-center text-slate text-sm">
         Checking access…
       </div>
     );
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
 
   if (!authorized) {
     return (
-      <div className="min-h-screen bg-mist flex items-center justify-center px-6 text-center">
+      <div className="min-h-dvh bg-mist flex items-center justify-center px-6 text-center">
         <div>
           <h1 className="font-display text-xl font-semibold text-ink">Not authorized</h1>
           <p className="text-slate text-sm mt-2 max-w-sm">
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-mist px-5 sm:px-8 py-8">
+    <div className="min-h-dvh bg-mist px-5 sm:px-8 py-8">
       <div className="max-w-5xl mx-auto">
         <header className="flex items-center justify-between mb-8">
           <div>
