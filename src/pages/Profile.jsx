@@ -118,7 +118,7 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-dvhitems-center justify-center text-slate text-sm">
+      <div className="min-h-dvh items-center justify-center text-slate text-sm">
         <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
         <MobileTabBar active="profile" />
       </div>
