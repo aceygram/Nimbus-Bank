@@ -6,7 +6,6 @@ import Sidebar from "../components/Sidebar";
 import AddBillerModal from "../components/AddBillerModal";
 import logoImg from '../assets/Nimbus-logo.png'; 
 
-
 const CATEGORY_TAGS = {
   utilities: "bg-muted-2 text-slate",
   rent: "bg-muted-2 text-slate",
