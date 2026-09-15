@@ -53,7 +53,7 @@ export default function More() {
 
   if (loading) {
     return (
-      <div className="min-h-dvhex items-center justify-center text-slate text-sm">
+      <div className="min-h-dvh w-full flex flex-col items-center justify-center text-slate text-sm">
         <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
       </div>
     );
