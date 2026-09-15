@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import DashboardPreview from "../components/DashboardPreview";
 import logoImg from '../assets/Nimbus-logo.png'; 
+import logoImgInv from '../assets/Nimbus-Bank-inverse.png';
 
 const FEATURES = [
   {
@@ -215,15 +216,15 @@ export default function Home() {
       <footer className="bg-ink px-6 py-10">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between gap-6">
           <div>
-            <img src={logoImg} alt="Nimbus Bank Logo" className="w-25 h-auto block mx-auto" />
+            <img src={logoImgInv} alt="Nimbus Bank Logo" className="w-25 h-auto block mx-auto" />
           </div>
-          <div className="flex gap-8 num text-sm text-white/60">
+          <div className="flex justify-center gap-8 num text-sm text-white/60">
             <span>Privacy Policy</span>
             <span>Terms of Service</span>
             <span>Security</span>
           </div>
         </div>
-        <p className="num text-white/40 text-xs mt-8 max-w-5xl mx-auto">© 2024 Nimbus Bank.</p>
+        <p className="num flex justify-center text-white/40 text-xs mt-8 max-w-5xl mx-auto">© 2024 Nimbus Bank.</p>
       </footer>
     </div>
   );
