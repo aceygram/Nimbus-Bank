@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import DashboardPreview from "../components/DashboardPreview";
-import logoImg from '../assets/Nimbus-logo.png'; 
-import logoImgInv from '../assets/Nimbus-Bank-inverse.png';
+import logoImgInv from '../assets/Nimbus-Bank-Inverse.png';
 
 const FEATURES = [
   {
