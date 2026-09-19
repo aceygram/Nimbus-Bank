@@ -179,7 +179,7 @@ export default function Accounts() {
           </div>
         </header>
 
-          <div className="bg-paper border border-line rounded-2xl px-6 py-5 shadow-sm">
+          <div className="bg-paper border border-line rounded-2xl px-6 py-5 shadow-sm mb-6">
             <p className="num text-xs text-label uppercase tracking-wide">Total Combined Balance</p>
             <p className="num text-3xl font-semibold text-ink mt-1">
               ${totalBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
