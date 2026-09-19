@@ -351,7 +351,7 @@ export default function Cards() {
                 - overflow-x-auto is the actual scroll enabler; the outer section's
                   min-w-0 (above) ensures it doesn't expand the page instead of scrolling.
               */}
-              <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 sm:-mx-6 px-4 mx-8 sm:px-6 snap-x snap-mandatory">
+              <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 sm:-mx-6 px-4 sm:px-6 snap-x snap-mandatory">
                 {cards.map((c, i) => (
                   <button
                     key={c.id}
