@@ -147,11 +147,31 @@ export default function Accounts() {
       />
 
       <main className="flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
-        <header className="flex items-center justify-between mb-8">
-          <div className="invisible" />
-          <div className="flex items-center gap-3">
-            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+        <span className="flex items-center justify-between mb-5">
+          <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15 lg:hidden"/>
+          <div className="flex items-center gap-3 lg:hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
+            </button>
+            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <HelpCircle size={18} />
+            </button>
+          </div>
+        </span>
+        <header className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="font-display text-3xl font-bold tracking-tight">
+              Your <span className="text-link">Accounts</span>
+            </h1>
+            <p className="text-slate mt-2 max-w-md">
+              A comprehensive overview of your wealth at Nimbus.
+            </p>
+          </div>
+          <div className="lg:flex items-center gap-3 hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist " />
             </button>
             <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <HelpCircle size={18} />
@@ -159,22 +179,12 @@ export default function Accounts() {
           </div>
         </header>
 
-        <div className="flex items-end justify-between gap-6 flex-wrap mb-8">
-          <div>
-            <h1 className="font-display text-4xl font-bold tracking-tight">
-              Your <span className="text-link">Accounts</span>
-            </h1>
-            <p className="text-slate mt-2 max-w-md">
-              A comprehensive overview of your wealth at Nimbus.
-            </p>
-          </div>
           <div className="bg-paper border border-line rounded-2xl px-6 py-5 shadow-sm">
             <p className="num text-xs text-label uppercase tracking-wide">Total Combined Balance</p>
             <p className="num text-3xl font-semibold text-ink mt-1">
               ${totalBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </p>
           </div>
-        </div>
 
         {/* ACCOUNT BENTO GRID */}
         <div className="grid sm:grid-cols-3 gap-5 mb-10">

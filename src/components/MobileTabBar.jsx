@@ -1,11 +1,12 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import { LayoutDashboard, Wallet, CreditCard, Settings } from "lucide-react";
+import { LayoutDashboard, Wallet, CreditCard, Settings, ReceiptText } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard", key: "dashboard" },
   { label: "Accounts", icon: Wallet, to: "/accounts", key: "accounts" },
   { label: "Cards", icon: CreditCard, to: "/cards", key: "cards" },
+  { label: "Bills", icon: ReceiptText, to: "/bills", key: "bills" },
   { label: "Settings", icon: Settings, to: "/profile", key: "profile" },
 ];
 

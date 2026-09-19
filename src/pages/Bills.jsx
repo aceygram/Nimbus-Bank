@@ -5,6 +5,7 @@ import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import AddBillerModal from "../components/AddBillerModal";
 import logoImg from '../assets/Nimbus-logo.png'; 
+import MobileTabBar from "../components/MobileTabBar";
 
 const CATEGORY_TAGS = {
   utilities: "bg-muted-2 text-slate",
@@ -175,6 +176,7 @@ export default function Bills() {
     return (
       <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
         <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
+          <MobileTabBar active="bills" />
       </div>
     );
   }
@@ -195,11 +197,30 @@ export default function Bills() {
       />
 
       <main className="flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
-        <header className="flex items-center justify-between mb-8">
-          <h1 className="font-display text-xl font-bold text-ink">Bills &amp; Payments</h1>
-          <div className="flex items-center gap-3">
-            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+        <span className="flex items-center justify-between mb-5">
+          <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15 lg:hidden"/>
+          <div className="flex items-center gap-3 lg:hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
+            </button>
+            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <HelpCircle size={18} />
+            </button>
+          </div>
+        </span>
+        
+        <header className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="font-display text-3xl font-bold tracking-tight">
+              Bills &amp; <span className="text-link">Payments</span>
+            </h1> 
+            <p className="text-slate mt-2 max-w-md">Manage your bills with precision.</p>
+          </div>
+          <div className="lg:flex items-center gap-3 hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist " />
             </button>
             <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <HelpCircle size={18} />
@@ -209,9 +230,6 @@ export default function Bills() {
 
         <div className="grid lg:grid-cols-3 gap-5 mb-8">
           <div className="lg:col-span-2">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold leading-tight">
-              Manage your bills with <span className="text-link">precision.</span>
-            </h2>
             <p className="text-slate text-lg mt-3">
               Total due this month: <span className="font-bold text-ink">${totalDue.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
             </p>
@@ -409,6 +427,7 @@ export default function Bills() {
           {toast}
         </div>
       )}
+      <MobileTabBar active="bills" />
     </div>
   );
 }

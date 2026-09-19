@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Send, Copy, FileText, MoreHorizontal, Bell, LayoutDashboard, Wallet, CreditCard, Settings } from "lucide-react";
+import { Send, Copy, FileText, MoreHorizontal, Bell, LayoutDashboard, Wallet, CreditCard, Settings, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import SendMoneyModal from "../components/SendMoneyModal";
 import SessionWarningModal from "../components/SessionWarningModal";
@@ -156,10 +156,15 @@ export default function Dashboard() {
       <main className="flex-1 px-5 sm:px-8 py-3 sm:py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
           <span className="flex items-center justify-between mb-5">
             <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15 lg:hidden"/>
-            <button className="relative w-10 h-10 rounded-full lg:hidden border border-line flex items-center justify-center text-slate hover:text-ink">
-              <Bell size={18} />
-              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
-            </button>
+            <div className="flex items-center gap-3 lg:hidden">
+              <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+                <Bell size={18} />
+                <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
+              </button>
+              <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+                <HelpCircle size={18} />
+              </button>
+            </div>
           </span>
 
         <header className="flex items-center justify-between mb-8">
@@ -169,10 +174,15 @@ export default function Dashboard() {
             <h1 className="font-display text-3xl font-semibold text-ink mt-1">Welcome back, <span class="text-[#2259bf]">{fullName.split(" ")[0]}</span></h1>
             
           </div>
-          <button className="relative w-10 h-10 rounded-full hidden lg:flex border border-line flex items-center justify-center text-slate hover:text-ink">
+          <div className="lg:flex items-center gap-3 hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <Bell size={18} />
               <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist " />
             </button>
+            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <HelpCircle size={18} />
+            </button>
+          </div>
         </header>
 
         {accounts.length === 0 ? (

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowUpDown, Bell, HelpCircle } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { ArrowUpDown, ArrowLeft, Bell, HelpCircle } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import logoImg from '../assets/Nimbus-logo.png';
+import MobileTabBar from "../components/MobileTabBar";
 
 const CURRENCIES = ["EUR", "GBP", "BTC"];
 const SYMBOL = { EUR: "€", GBP: "£", BTC: "" };
@@ -109,13 +110,14 @@ export default function Exchange() {
   }
 
   if (loading) {
-    return <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
-      <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
-    </div>;
+    <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
+        <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
+        <MobileTabBar active="accounts" />  
+      </div>
   }
 
   return (
-    <div className="min-h-dvhex">
+    <div className="min-h-dvh flex">
       <Sidebar
         fullName={fullName}
         isAdmin={isAdmin}
@@ -125,6 +127,23 @@ export default function Exchange() {
       />
 
       <main className="flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
+        <span className="flex items-center justify-between mb-5">
+          <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15 lg:hidden"/>
+          <div className="flex items-center gap-3 lg:hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
+            </button>
+            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <HelpCircle size={18} />
+            </button>
+          </div>
+        </span>
+
+        <Link to="/accounts" className="num text-link text-sm font-medium flex items-center gap-1 mb-5 hover:underline">
+          <ArrowLeft size={12} /> Go Back to Accounts
+        </Link>
+        
         <header className="flex items-end justify-between flex-wrap gap-4 mb-8">
           <div>
             <h1 className="font-display text-4xl font-bold tracking-tight">Currency Exchange</h1>
@@ -286,6 +305,7 @@ export default function Exchange() {
           {toast}
         </div>
       )}
+      <MobileTabBar active="accounts" />
     </div>
   );
 }

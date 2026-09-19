@@ -272,9 +272,10 @@ export default function Cards() {
 
   if (loading) {
       
-    return <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
-              <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
-                <MobileTabBar active="cards" />
+    return 
+    <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
+      <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
+      <MobileTabBar active="cards" />
     </div>;
   }
 
@@ -291,24 +292,41 @@ export default function Cards() {
       />
 
       <main className="overflow-x-hidden flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
-        <header className="flex items-end justify-between gap-4 flex-wrap mb-8">
+        <span className="flex items-center justify-between mb-5">
+          <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15 lg:hidden"/>
+          <div className="flex items-center gap-3 lg:hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
+            </button>
+            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <HelpCircle size={18} />
+            </button>
+          </div>
+        </span>
+        <header className="flex items-center justify-between gap-4 flex-wrap mb-8">
           <div>
-            <h1 className="font-display text-4xl font-bold tracking-tight">
+            <h1 className="font-display text-3xl font-bold tracking-tight">
               Cards <span className="text-link">Management</span>
             </h1>
             <p className="text-slate mt-2 max-w-md">Securely control your cards with real-time spending controls.</p>
           </div>
           <div className="flex items-center gap-3">
-            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+            <button onClick={() => setModal("order")} className="num bg-ink text-white text-sm font-semibold px-5 py-2.5 rounded-xl">
+              + Order New Card
+            </button>
+            <div className="lg:flex items-center gap-3 hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist " />
             </button>
             <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <HelpCircle size={18} />
             </button>
-            <button onClick={() => setModal("order")} className="num bg-ink text-white text-sm font-semibold px-5 py-2.5 rounded-xl">
-              + Order New Card
-            </button>
           </div>
+          </div>
+
+          
         </header>
 
         {cards.length === 0 ? (

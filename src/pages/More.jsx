@@ -12,10 +12,13 @@ import {
   HelpCircle,
   ShieldHalf,
   Award,
+  ArrowLeft
 } from "lucide-react";
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import logoImg from '../assets/Nimbus-logo.png'; 
+import MobileTabBar from "../components/MobileTabBar";
+
 
 export default function More() {
   const navigate = useNavigate();
@@ -55,6 +58,7 @@ export default function More() {
     return (
       <div className="min-h-dvh w-full flex flex-col items-center justify-center text-slate text-sm">
         <img src={logoImg} alt="Nimbus Bank Logo" className="w-30 h-30 animate-pulse"/>
+        <MobileTabBar active="dashboard" />
       </div>
     );
   }
@@ -70,23 +74,41 @@ export default function More() {
       />
 
       <main className="flex-1 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
-        <header className="flex items-center justify-between mb-8">
-          <div className="invisible" />
-          <div className="flex items-center gap-3">
-            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+        <span className="flex items-center justify-between mb-5">
+          <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15 lg:hidden"/>
+          <div className="flex items-center gap-3 lg:hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" />
+            </button>
+            <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <HelpCircle size={18} />
+            </button>
+          </div>
+        </span>
+
+        <Link to="/dashboard" className="num lg:hidden text-link text-sm font-medium flex items-center gap-1 mb-5 hover:underline">
+          <ArrowLeft size={12} /> Go Back to Dashboard
+        </Link>
+        
+        <header className="flex items-start justify-between mb-8">
+          <div>
+            <h1 className="font-display text-3xl font-bold tracking-tight">
+              Beyond <span className="text-link">Banking</span>
+            </h1> 
+            <p className="text-slate mt-2 max-w-md"> Access your complete financial ecosystem.Manage your investments, secure your future, and handle taxes with Nimbus precision.</p>
+          </div>
+          <div className="lg:flex items-center gap-3 hidden">
+            <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
+              <Bell size={18} />
+              <span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist " />
             </button>
             <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <HelpCircle size={18} />
             </button>
           </div>
         </header>
-
-        <p className="font-display text-3xl font-semibold text-ink mb-2">Beyond Banking</p>
-        <p className="text-slate text-lg max-w-2xl mb-8">
-          Access your complete financial ecosystem. <span className="text-link">Manage your investments, secure your future, and handle taxes with Nimbus precision.</span>
           
-        </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Tax Payments — wide */}
@@ -215,6 +237,8 @@ export default function More() {
           {toast}
         </div>
       )}
+      <MobileTabBar active="dashboard" />
+
     </div>
   );
 }
