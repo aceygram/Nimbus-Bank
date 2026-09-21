@@ -6,8 +6,6 @@ import Sidebar from "../components/Sidebar";
 import MobileTabBar from "../components/MobileTabBar";
 import logoImg from '../assets/Nimbus-logo.png';
 
-// ─── Modals (logic unchanged) ────────────────────────────────────────────────
-
 function OrderCardModal({ accounts, onClose, onSuccess }) {
   const [accountId, setAccountId] = useState(accounts[0]?.id || "");
   const [cardType, setCardType] = useState("debit");
@@ -46,7 +44,7 @@ function OrderCardModal({ accounts, onClose, onSuccess }) {
           <div>
             <label className="num text-xs text-label uppercase">Card Type</label>
             <select value={cardType} onChange={(e) => setCardType(e.target.value)}
-              className="w-full mt-1 px-3.5 py-2.5 rounded-lg border border-border-soft bg-mist text-sm capitalize">
+              className="w-full mt-1 px-3.5 py-2.5 rounded-lg border border-border-soft bg-mist text-sm">
               <option value="debit">Debit</option>
               <option value="credit">Credit</option>
             </select>
@@ -142,7 +140,9 @@ function SimulatePurchaseModal({ card, onClose, onSuccess }) {
             className="num w-full px-3.5 py-2.5 rounded-lg border border-border-soft bg-mist text-sm" />
           <select value={category} onChange={(e) => setCategory(e.target.value)}
             className="w-full px-3.5 py-2.5 rounded-lg border border-border-soft bg-mist text-sm">
-            {["Shopping", "Dining", "Travel", "Electronics", "Groceries"].map((c) => <option key={c}>{c}</option>)}
+            {["Shopping", "Dining", "Travel", "Electronics", "Groceries"].map((c) => (
+              <option key={c}>{c}</option>
+            ))}
           </select>
           <div className="flex gap-3">
             <button type="button" onClick={onClose} className="flex-1 border border-line text-ink font-semibold py-2.5 rounded-lg">Cancel</button>
@@ -155,8 +155,6 @@ function SimulatePurchaseModal({ card, onClose, onSuccess }) {
     </div>
   );
 }
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Cards() {
   const navigate = useNavigate();
@@ -239,8 +237,6 @@ export default function Cards() {
     refresh();
   }
 
-  // FIX 1: loading return was broken (return on its own line = ASI inserts semicolon,
-  // JSX is never reached). Wrapped in parentheses.
   if (loading) {
     return (
       <div className="min-h-dvh flex items-center justify-center text-slate text-sm">
@@ -263,12 +259,17 @@ export default function Cards() {
       />
 
       {/*
-        FIX 2: added min-w-0 to <main>.
-        Without it, a flex child ignores its own overflow and grows to fit its
-        content — meaning the card carousel can push the whole page wider than
-        the viewport, breaking the mobile layout entirely.
+        FIX: removed max-w-5xl mx-auto from main.
+        In a flex-row layout with a sidebar, flex-1 already fills all remaining
+        space after the sidebar. Adding max-w-5xl (1024px) constrains the width,
+        and mx-auto then distributes the leftover as equal left/right margins —
+        which pushes the content away from the sidebar on wider screens (e.g. at
+        1440px viewport: 1440-256 sidebar = 1184px available, 1184-1024 = 160px
+        split as 80px each side). The content appeared to float in the middle
+        with too much left gap. Removing both and using overflow-x-hidden instead
+        keeps content flush against the sidebar on all screen sizes.
       */}
-      <main className="flex-1 min-w-0 px-5 sm:px-8 py-8 pb-24 lg:pb-10 max-w-5xl mx-auto w-full">
+      <main className="flex-1 min-w-0 px-5 sm:px-8 py-8 pb-24 lg:pb-10 overflow-x-hidden">
 
         {/* Mobile-only top bar */}
         <span className="flex items-center justify-between mb-5 lg:hidden">
@@ -298,7 +299,6 @@ export default function Cards() {
             >
               + Order New Card
             </button>
-            {/* Desktop-only bell/help — mobile has them in the top bar above */}
             <div className="hidden lg:flex items-center gap-3">
               <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
                 <Bell size={18} />
@@ -316,47 +316,18 @@ export default function Cards() {
             No cards yet — order one to get started.
           </p>
         ) : (
-          /*
-            FIX 3: layout restructured.
-            Old shape (mobile order):
-              [Cards + Actions]   ← lg:col-span-2
-                [Recent Activity]  ← nested INSIDE col-span-2 div
-              [Sidebar panels]    ← right column
-            
-            Problem: on mobile, Activity appeared before the sidebar panels,
-            and the nested div caused min-w-0 issues for the action buttons grid.
-            
-            New shape (mobile order):
-              [Cards + Actions]       ← lg:col-span-2, standalone grid child
-              [Sidebar panels]        ← right column, standalone grid child
-              [Recent Activity]       ← lg:col-span-2, standalone grid child
-            
-            This means on mobile you see: Cards → Sidebar panels → Activity,
-            which is the logical reading order. The action buttons grid is now
-            in its own properly-constrained section.
-          */
           <div className="grid lg:grid-cols-3 gap-6">
 
             {/* ── Cards + Actions ── */}
             <section className="lg:col-span-2 bg-paper border border-line rounded-xl p-4 sm:p-6 min-w-0">
               <h3 className="text-ink mb-5">Your Active Cards</h3>
 
-              {/*
-                FIX 4: card carousel.
-                - Negative horizontal margin (-mx-4 sm:-mx-6) + matching padding (px-4 sm:px-6)
-                  lets cards scroll flush to the card edges on mobile instead of being
-                  clipped by the section's padding.
-                - snap-x snap-mandatory gives a native swipe feel: each card snaps into place.
-                - pb-3 gives thumb room above the scrollbar on desktop.
-                - overflow-x-auto is the actual scroll enabler; the outer section's
-                  min-w-0 (above) ensures it doesn't expand the page instead of scrolling.
-              */}
-              <div className="flex gap-4 overflow-x-auto pb-3 -mx-4 sm:-mx-6 px-4 sm:px-6 snap-x snap-mandatory">
+              <div className="flex gap-4 overflow-x-auto pb-3 -mx-3 sm:-mx-6 px-4 sm:px-6 snap-mandatory">
                 {cards.map((c, i) => (
                   <button
                     key={c.id}
                     onClick={() => setActiveCard(i)}
-                    className="shrink-0 w-[260px] sm:w-[300px] h-[175px] sm:h-[180px] rounded-2xl p-5 sm:p-6 flex flex-col justify-between text-left text-white snap-start"
+                    className="shrink-0 w-[280px] sm:w-[300px] h-[175px] sm:h-[180px] rounded-2xl p-5 sm:p-6 flex flex-col justify-between text-left text-white snap-start"
                     style={{
                       backgroundImage:
                         c.card_type === "credit"
@@ -394,7 +365,6 @@ export default function Cards() {
                 ))}
               </div>
 
-              {/* Action buttons — 3 cols always, but now inside a min-w-0 parent so they fit */}
               {card && (
                 <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-6 pt-5 border-t border-line">
                   <button
@@ -428,7 +398,7 @@ export default function Cards() {
               )}
             </section>
 
-            {/* ── Right column: Spending + Security + ATM ── */}
+            {/* ── Right column ── */}
             <div className="space-y-6 min-w-0">
               {card && (
                 <>
@@ -505,7 +475,7 @@ export default function Cards() {
               </section>
             </div>
 
-            {/* ── Recent Activity (full width, after sidebar panels on mobile) ── */}
+            {/* ── Recent Activity — full width, after sidebar panels on mobile ── */}
             <section className="lg:col-span-2 bg-paper border border-line rounded-xl p-6 min-w-0">
               <h3 className="text-ink mb-4">Recent Activity</h3>
               {activity.length === 0 ? (
@@ -526,7 +496,7 @@ export default function Cards() {
                           <p className="text-ink font-bold text-sm truncate">{tx.to_name}</p>
                           <p className="num text-slate text-xs truncate">
                             {tx.note} · {new Date(tx.created_at).toLocaleString(undefined, {
-                              month: "short", day: "numeric", hour: "numeric", minute: "2-digit"
+                              month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
                             })}
                           </p>
                         </div>
