@@ -4,6 +4,8 @@ import { Bell, HelpCircle, Pencil, Fingerprint, KeyRound, ShieldCheck, Camera } 
 import { supabase } from "../lib/supabaseClient";
 import Sidebar from "../components/Sidebar";
 import MobileTabBar from "../components/MobileTabBar";
+import TwoFactorModal from "../components/TwoFactorModal";
+import BiometricModal from "../components/BiometricModal";
 import logoImg from '../assets/Nimbus-logo.png';
 
 export default function Profile() {
@@ -15,6 +17,17 @@ export default function Profile() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+
+  // MFA state
+  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+  const [biometricEnabled, setBiometricEnabled] = useState(false);
+  const [biometricCredentialId, setBiometricCredentialId] = useState(null);
+
+  // Modals
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
+  const [showBiometric, setShowBiometric] = useState(false);
+
+  // Edit / change password
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState({ full_name: "", phone: "", address: "" });
   const [saving, setSaving] = useState(false);
@@ -26,8 +39,21 @@ export default function Profile() {
   const [toast, setToast] = useState("");
 
   const loadProfile = useCallback(async (id) => {
-    const { data: profile } = await supabase.from("profiles").select("full_name, email, phone, address, is_admin").eq("id", id).single();
-    if (profile) { setFullName(profile.full_name||""); setEmail(profile.email||""); setPhone(profile.phone||""); setAddress(profile.address||""); setIsAdmin(profile.is_admin); }
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("full_name, email, phone, address, is_admin, two_factor_enabled, biometric_enabled, biometric_credential_id")
+      .eq("id", id)
+      .single();
+    if (profile) {
+      setFullName(profile.full_name || "");
+      setEmail(profile.email || "");
+      setPhone(profile.phone || "");
+      setAddress(profile.address || "");
+      setIsAdmin(profile.is_admin);
+      setTwoFactorEnabled(profile.two_factor_enabled || false);
+      setBiometricEnabled(profile.biometric_enabled || false);
+      setBiometricCredentialId(profile.biometric_credential_id || null);
+    }
   }, []);
 
   useEffect(() => {
@@ -39,11 +65,15 @@ export default function Profile() {
   }, [navigate, loadProfile]);
 
   async function handleSaveDetails(e) {
-    e.preventDefault(); setSaving(true);
-    const { error } = await supabase.from("profiles").update({ full_name: draft.full_name, phone: draft.phone, address: draft.address }).eq("id", userId);
+    e.preventDefault();
+    setSaving(true);
+    const { error } = await supabase.from("profiles")
+      .update({ full_name: draft.full_name, phone: draft.phone, address: draft.address })
+      .eq("id", userId);
     setSaving(false);
     if (error) { setToast("Couldn't save changes"); setTimeout(() => setToast(""), 2500); return; }
-    setFullName(draft.full_name); setPhone(draft.phone); setAddress(draft.address); setEditing(false);
+    setFullName(draft.full_name); setPhone(draft.phone); setAddress(draft.address);
+    setEditing(false);
     setToast("Details updated"); setTimeout(() => setToast(""), 2000);
   }
 
@@ -58,6 +88,8 @@ export default function Profile() {
     setChangingPassword(false); setNewPassword(""); setConfirmPassword("");
     setToast("Password changed"); setTimeout(() => setToast(""), 2000);
   }
+
+  function showToast(msg) { setToast(msg); setTimeout(() => setToast(""), 2200); }
 
   if (loading) {
     return (
@@ -77,6 +109,7 @@ export default function Profile() {
         onLogout={async () => { await supabase.auth.signOut(); navigate("/"); }} />
 
       <div className="flex-1 min-w-0 flex flex-col">
+        {/* Sticky mobile header */}
         <div className="sticky top-0 z-30 lg:hidden bg-mist/95 backdrop-blur-sm border-b border-line px-5 py-3 flex items-center justify-between shrink-0">
           <img src={logoImg} alt="Nimbus Bank Logo" className="h-10 w-auto" />
           <div className="flex items-center gap-3">
@@ -93,11 +126,12 @@ export default function Profile() {
           <header className="flex items-center justify-between mb-8">
             <h1 className="font-display text-2xl font-semibold text-ink">Profile Settings</h1>
             <div className="hidden lg:flex items-center gap-3">
-              <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink"><Bell size={18} /><span className="absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-coral border-2 border-mist" /></button>
+              <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink"><Bell size={18} /></button>
               <button className="w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink"><HelpCircle size={18} /></button>
             </div>
           </header>
 
+          {/* ── Personal Details + Tier ── */}
           <div className="grid sm:grid-cols-[1.3fr_1fr] gap-5 mb-5">
             <div className="bg-paper border border-line rounded-2xl p-6">
               <div className="flex items-center justify-between mb-5">
@@ -111,7 +145,7 @@ export default function Profile() {
               </div>
               {!editing ? (
                 <div className="grid sm:grid-cols-2 gap-5">
-                  {[["Full Name", fullName||"—"], ["Email Address", email], ["Phone Number", phone||"Not provided"], ["Residential Address", address||"Not provided"]].map(([label, val]) => (
+                  {[["Full Name", fullName || "—"], ["Email Address", email], ["Phone Number", phone || "Not provided"], ["Residential Address", address || "Not provided"]].map(([label, val]) => (
                     <div key={label}>
                       <p className="num text-xs text-label uppercase">{label}</p>
                       <p className="text-ink font-medium mt-1 break-all">{val}</p>
@@ -120,16 +154,16 @@ export default function Profile() {
                 </div>
               ) : (
                 <form onSubmit={handleSaveDetails} className="space-y-4">
-                  {[["Full Name", "full_name", "Jane Doe"], ["Phone Number", "phone", "+1 (555) 012-3456"], ["Residential Address", "address", "123 Main St, Springfield"]].map(([label, key, placeholder]) => (
+                  {[["Full Name", "full_name", "Jane Doe"], ["Phone Number", "phone", "+1 (555) 012-3456"], ["Residential Address", "address", "123 Main St"]].map(([label, key, ph]) => (
                     <div key={key}>
                       <label className="num text-xs text-label uppercase">{label}</label>
-                      <input value={draft[key]} onChange={(e) => setDraft({ ...draft, [key]: e.target.value })} placeholder={placeholder}
+                      <input value={draft[key]} onChange={(e) => setDraft({ ...draft, [key]: e.target.value })} placeholder={ph}
                         className="w-full mt-1 px-3.5 py-2.5 rounded-lg border border-border-soft bg-mist text-sm focus:outline-none focus:ring-2 focus:ring-mint" />
                     </div>
                   ))}
                   <div className="flex gap-3 pt-1">
-                    <button type="button" onClick={() => setEditing(false)} className="flex-1 border border-line text-ink font-medium py-2.5 rounded-lg hover:bg-mist transition-colors">Cancel</button>
-                    <button type="submit" disabled={saving} className="flex-1 bg-mint text-ink font-bold py-2.5 rounded-lg hover:bg-mint-deep transition-colors disabled:opacity-60">{saving ? "Saving…" : "Save"}</button>
+                    <button type="button" onClick={() => setEditing(false)} className="flex-1 border border-line text-ink font-medium py-2.5 rounded-lg">Cancel</button>
+                    <button type="submit" disabled={saving} className="flex-1 bg-mint text-ink font-bold py-2.5 rounded-lg disabled:opacity-60">{saving ? "Saving…" : "Save"}</button>
                   </div>
                 </form>
               )}
@@ -147,6 +181,7 @@ export default function Profile() {
             </div>
           </div>
 
+          {/* ── Profile Picture + Security ── */}
           <div className="grid sm:grid-cols-2 gap-5">
             <div className="bg-paper border border-line rounded-2xl p-6">
               <h2 className="font-display font-semibold text-ink mb-5">Profile Picture</h2>
@@ -157,15 +192,18 @@ export default function Profile() {
                     <Camera size={14} className="text-blue-active-text" />
                   </span>
                 </div>
-                <p className="text-slate text-sm mt-4 max-w-xs">Photo upload isn't wired in this demo — avatar is generated from your name.</p>
+                <p className="text-slate text-sm mt-4 max-w-xs">Avatar is generated from your name — photo upload is not wired in this demo.</p>
                 <button disabled className="mt-4 border border-line text-slate font-medium text-sm px-5 py-2 rounded-lg cursor-not-allowed">Replace Photo</button>
               </div>
             </div>
 
             <div className="bg-paper border border-line rounded-2xl p-6">
               <h2 className="font-display font-semibold text-ink mb-5">Security &amp; Access</h2>
+
+              {/* Change Password */}
               {!changingPassword ? (
-                <button onClick={() => setChangingPassword(true)} className="w-full flex items-center gap-4 bg-mist rounded-xl px-4 py-3.5 mb-3 hover:bg-muted transition-colors">
+                <button onClick={() => setChangingPassword(true)}
+                  className="w-full flex items-center gap-4 bg-mist rounded-xl px-4 py-3.5 mb-3 hover:bg-muted transition-colors">
                   <span className="w-9 h-9 rounded-lg bg-coral/10 text-coral flex items-center justify-center shrink-0"><KeyRound size={16} /></span>
                   <div className="text-left">
                     <p className="text-sm font-medium text-ink">Change Password</p>
@@ -188,21 +226,87 @@ export default function Profile() {
                   </div>
                 </form>
               )}
-              {[["Biometric Authentication", Fingerprint, "bg-blue/10 text-blue"], ["Two-Factor Authentication", ShieldCheck, "bg-mint/15 text-mint-deep"]].map(([label, Icon, tint]) => (
-                <div key={label} className="flex items-center gap-4 bg-mist rounded-xl px-4 py-3.5 mb-3 opacity-60">
-                  <span className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${tint}`}><Icon size={16} /></span>
-                  <div>
-                    <p className="text-sm font-medium text-ink">{label}</p>
-                    <p className="num text-xs text-slate">Not available in this demo</p>
+
+              {/* Biometric Authentication — now real */}
+              <button
+                onClick={() => setShowBiometric(true)}
+                className="w-full flex items-center justify-between gap-4 bg-mist rounded-xl px-4 py-3.5 mb-3 hover:bg-muted transition-colors"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="w-9 h-9 rounded-lg bg-blue/10 text-blue flex items-center justify-center shrink-0">
+                    <Fingerprint size={16} />
+                  </span>
+                  <div className="text-left">
+                    <p className="text-sm font-medium text-ink">Biometric Authentication</p>
+                    <p className="num text-xs text-slate">Fingerprint, Face ID, or Windows Hello</p>
                   </div>
                 </div>
-              ))}
+                {/* Toggle pill — visual state only, click opens modal */}
+                <span className={`shrink-0 w-11 h-6 rounded-full relative transition-colors ${biometricEnabled ? "bg-link" : "bg-border-soft"}`}>
+                  <span className="absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all" style={{ left: biometricEnabled ? "22px" : "2px" }} />
+                </span>
+              </button>
+
+              {/* Two-Factor Authentication — now real */}
+              <button
+                onClick={() => setShowTwoFactor(true)}
+                className="w-full flex items-center justify-between gap-4 bg-mist rounded-xl px-4 py-3.5 hover:bg-muted transition-colors"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="w-9 h-9 rounded-lg bg-mint/15 text-mint-deep flex items-center justify-center shrink-0">
+                    <ShieldCheck size={16} />
+                  </span>
+                  <div className="text-left">
+                    <p className="text-sm font-medium text-ink">Two-Factor Authentication</p>
+                    <p className="num text-xs text-slate">Email OTP on every login</p>
+                  </div>
+                </div>
+                <span className={`shrink-0 w-11 h-6 rounded-full relative transition-colors ${twoFactorEnabled ? "bg-link" : "bg-border-soft"}`}>
+                  <span className="absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all" style={{ left: twoFactorEnabled ? "22px" : "2px" }} />
+                </span>
+              </button>
             </div>
           </div>
         </main>
       </div>
 
-      {toast && <div className="fixed bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 bg-ink text-white text-sm px-4 py-2.5 rounded-full shadow-lg z-40">{toast}</div>}
+      {/* ── Modals ── */}
+      {showTwoFactor && (
+        <TwoFactorModal
+          userId={userId}
+          userEmail={email}
+          isEnabled={twoFactorEnabled}
+          onClose={() => setShowTwoFactor(false)}
+          onSuccess={(flag) => {
+            setTwoFactorEnabled(flag);
+            setShowTwoFactor(false);
+            showToast(flag ? "2FA enabled" : "2FA disabled");
+          }}
+        />
+      )}
+
+      {showBiometric && (
+        <BiometricModal
+          userId={userId}
+          userEmail={email}
+          fullName={fullName}
+          isEnabled={biometricEnabled}
+          credentialId={biometricCredentialId}
+          onClose={() => setShowBiometric(false)}
+          onSuccess={(flag, credId) => {
+            setBiometricEnabled(flag);
+            setBiometricCredentialId(credId);
+            setShowBiometric(false);
+            showToast(flag ? "Biometric registered" : "Biometric disabled");
+          }}
+        />
+      )}
+
+      {toast && (
+        <div className="fixed bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 bg-ink text-white text-sm px-4 py-2.5 rounded-full shadow-lg z-40">
+          {toast}
+        </div>
+      )}
       <MobileTabBar active="profile" />
     </div>
   );

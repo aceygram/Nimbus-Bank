@@ -1,0 +1,10 @@
+-- ============================================================
+-- MFA fields migration — run after 04_profile_fields.sql
+-- Adds 2FA (email OTP) and biometric (WebAuthn) flags to profiles.
+-- The update policy already exists from 04_profile_fields.sql.
+-- ============================================================
+
+alter table public.profiles
+  add column if not exists two_factor_enabled boolean not null default false,
+  add column if not exists biometric_enabled boolean not null default false,
+  add column if not exists biometric_credential_id text; -- base64 WebAuthn rawId

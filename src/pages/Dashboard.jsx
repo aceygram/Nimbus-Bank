@@ -116,7 +116,7 @@ export default function Dashboard() {
 
         {/* STICKY MOBILE HEADER — outside main's py-6 so sticky:top-0 == true viewport top */}
         <div className="sticky top-0 z-30 lg:hidden bg-mist/95 backdrop-blur-sm border-b border-line px-5 py-3 flex items-center justify-between shrink-0">
-          <img src={logoImg} alt="Nimbus Bank Logo" className="h-15 w-auto" />
+          <img src={logoImg} alt="Nimbus Bank Logo" className="h-10 w-auto" />
           <div className="flex items-center gap-3">
             <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <Bell size={18} />
