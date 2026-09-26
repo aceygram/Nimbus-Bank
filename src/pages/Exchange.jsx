@@ -152,10 +152,9 @@ export default function Exchange() {
         onLogout={async () => { await supabase.auth.signOut(); navigate("/"); }}
       />
 
-      <main className="flex-1 min-w-0 px-5 sm:px-8 py-8 pb-24 lg:pb-10 overflow-x-hidden">
-        {/* Mobile top bar */}
-        <span className="flex items-center justify-between mb-5 lg:hidden">
-          <img src={logoImg} alt="Nimbus Bank Logo" className="w-15 h-15" />
+      <div className="flex-1 min-w-0 flex flex-col">
+        <div className="sticky top-0 z-30 lg:hidden bg-mist/95 backdrop-blur-sm border-b border-line px-5 py-3 flex items-center justify-between shrink-0">
+          <img src={logoImg} alt="Nimbus Bank Logo" className="h-10 w-auto" />
           <div className="flex items-center gap-3">
             <button className="relative w-10 h-10 rounded-full border border-line flex items-center justify-center text-slate hover:text-ink">
               <Bell size={18} />
@@ -165,7 +164,9 @@ export default function Exchange() {
               <HelpCircle size={18} />
             </button>
           </div>
-        </span>
+        </div>
+        <main className="flex-1 min-w-0 px-5 sm:px-8 py-6 pb-24 lg:py-8 lg:pb-10 overflow-x-hidden">
+
 
         <Link
           to="/accounts"
@@ -363,6 +364,8 @@ export default function Exchange() {
           {toast}
         </div>
       )}
+      </div>
+
       <MobileTabBar active="accounts" />
     </div>
   );

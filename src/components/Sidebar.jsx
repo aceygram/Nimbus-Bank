@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { LayoutDashboard, Wallet, CreditCard, Receipt, Grid2x2, Settings, HelpCircle, LogOut } from "lucide-react";
-import logoImg from '../assets/Nimbus-logo.png'; 
+import logoImg from '../assets/Nimbus-logo.png';
 
 const NAV_ITEMS = [
   ["Dashboard", LayoutDashboard, "/dashboard", "dashboard"],
@@ -13,7 +13,11 @@ const NAV_ITEMS = [
 
 export default function Sidebar({ fullName, isAdmin, active, onTransferClick, onLogout }) {
   return (
-    <aside className="hidden lg:flex flex-col w-64 bg-muted border-r border-line px-4 py-6 shrink-0">
+    // sticky + h-screen: sidebar occupies the full viewport height and sticks
+    // to the top as the right-side main content scrolls independently.
+    // overflow-y-auto: if sidebar content ever exceeds viewport height it can
+    // scroll on its own without affecting the page scroll.
+    <aside className="hidden lg:flex flex-col w-64 bg-muted border-r border-line px-4 py-6 shrink-0 sticky top-0 h-screen overflow-y-auto">
       <img src={logoImg} alt="Nimbus Bank Logo" className="w-25 h-25 mb-5 object-cover hover:scale-105 transition-transform duration-300"/>
 
       <div className="flex items-center gap-3 px-2 pb-6 mb-2">
@@ -42,18 +46,12 @@ export default function Sidebar({ fullName, isAdmin, active, onTransferClick, on
       </nav>
 
       {isAdmin && (
-        <Link
-          to="/admin"
-          className="num mt-2 px-4 py-3 rounded-lg text-sm text-link hover:bg-paper transition-colors"
-        >
+        <Link to="/admin" className="num mt-2 px-4 py-3 rounded-lg text-sm text-link hover:bg-paper transition-colors">
           Admin dashboard →
         </Link>
       )}
 
-      <button
-        onClick={onTransferClick}
-        className="mt-6 bg-mint text-ink font-bold py-3 rounded-xl hover:bg-mint-deep transition-colors"
-      >
+      <button onClick={onTransferClick} className="mt-6 bg-mint text-ink font-bold py-3 rounded-xl hover:bg-mint-deep transition-colors">
         Transfer Funds
       </button>
 
@@ -61,10 +59,7 @@ export default function Sidebar({ fullName, isAdmin, active, onTransferClick, on
         <button className="num w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-slate hover:bg-paper transition-colors">
           <HelpCircle size={18} /> Help Center
         </button>
-        <button
-          onClick={onLogout}
-          className="num w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-coral hover:bg-paper transition-colors"
-        >
+        <button onClick={onLogout} className="num w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-coral hover:bg-paper transition-colors">
           <LogOut size={18} /> Logout
         </button>
       </div>
